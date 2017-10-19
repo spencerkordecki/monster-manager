@@ -1,34 +1,8 @@
 import React from 'react';
-import { render } from 'react-dom';
-import { createStore } from 'redux';
-import { Provider } from 'react-redux';
-import { Router, browserHistory } from 'react-router';
-import { syncHistoryWithStore } from 'react-router-redux';
-import reducers from './reducers';
-import routes from './routes';
+import ReactDOM from 'react-dom';
+import './index.css';
+import App from './App';
+import registerServiceWorker from './registerServiceWorker';
 
-// Import Monsters
-import monsters from './data/monsters';
-
-// Create an object for the default data
-const defaultState = {
-	monsters
- };
-
-const store = createStore(reducers, defaultState);
-const history = syncHistoryWithStore(browserHistory, store);
-
-render(
-	<Provider store={store}>
-		<Router history={history}>
-			{ routes }
-		</Router>
-	</Provider>,
-	document.getElementById('app')
-);
-
-if(process.env.NODE_ENV == 'development' && module.hot) {
-	module.hot.accept('./reducers', () => {
-		store.replaceReducer(require('./reducers').default);
-	});
-}
+ReactDOM.render(<App />, document.getElementById('root'));
+registerServiceWorker();
