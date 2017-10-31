@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import 'bootstrap/dist/css/bootstrap.css';
+import Navigation from '../components/Navigation';
 
 class App extends Component {
     render() {
         return (
-			<div className="app container">
-
+			<div id="app" className="container">
+                <h1>Monster Manager</h1>
+                <Navigation />
             </div>
         );
     }
