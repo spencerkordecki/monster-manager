@@ -1,13 +1,20 @@
 import React, { Component } from 'react';
-import { Nav, NavItem } from 'react-bootstrap';
+import { Nav, Navbar, NavItem } from 'react-bootstrap';
 
 class Navigation extends Component {
     render() {
         return(
-            <Nav bsStyle="tabs" pullLeft="true">
-                <NavItem>Monster List</NavItem>
-                <NavItem>View Encounter</NavItem>
-            </Nav>
+            <Navbar>
+                <Navbar.Header>
+                    <Navbar.Brand>
+                        <a href="">Monster Manager</a>
+                    </Navbar.Brand>
+                </Navbar.Header>
+                <Nav>
+                    <NavItem>Monster List</NavItem>
+                    <NavItem>View Encounter</NavItem>
+                </Nav>
+            </Navbar>
         );
     }
 };
