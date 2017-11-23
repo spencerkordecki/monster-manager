@@ -1,3 +1,19 @@
+/* Bootstrap Fixes */
+.equal {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.equal > div[class*="col-"] {
+    display: flex;
+    flex-direction: column;
+}
+
+.panel {
+    height: 100%;
+}
+
+/* Custom CSS */
 body {
     margin: 0;
     padding: 0;
