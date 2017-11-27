@@ -36,32 +36,62 @@ class Filters extends Component {
         this.state = initialState;
     }
 
+    handleChange = (type, e) => {
+        this.props.filter(type, e);
+    };
+
     render() {
-        return(
+        return (
             <Col md={3}>
                 <Well>
                     <FormGroup>
                         <ControlLabel>Type</ControlLabel>
                         {this.state.types.map(function(type, index) {
-                            return <Checkbox key={index}>{type}</Checkbox>;
+                            return (
+                                <Checkbox
+                                    onChange={e => this.handleChange('type', e)}
+                                    key={index}
+                                    value={type}
+                                >
+                                    {type}
+                                </Checkbox>
+                            );
                         }, this)}
                     </FormGroup>
                     <FormGroup>
                         <ControlLabel>Size</ControlLabel>
                         {this.state.sizes.map(function(size, index) {
-                            return <Checkbox key={index}>{size}</Checkbox>;
+                            return (
+                                <Checkbox
+                                    onChange={e => this.handleChange('size', e)}
+                                    key={index}
+                                    value={size}
+                                >
+                                    {size}
+                                </Checkbox>
+                            );
                         }, this)}
                     </FormGroup>
                     <FormGroup>
                         <ControlLabel>Alignment</ControlLabel>
                         {this.state.alignments.map(function(alignment, index) {
-                            return <Checkbox key={index}>{alignment}</Checkbox>;
+                            return (
+                                <Checkbox
+                                    onChange={e =>
+                                        this.handleChange('alignment', e)
+                                    }
+                                    key={index}
+                                    value={alignment}
+                                >
+                                    {alignment}
+                                </Checkbox>
+                            );
                         }, this)}
                     </FormGroup>
                 </Well>
             </Col>
         );
     }
-};
+}
 
 export default Filters;
