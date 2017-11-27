@@ -1,39 +1,15 @@
 import React, { Component } from 'react';
 import { Well, FormGroup, ControlLabel, Checkbox, Col } from 'react-bootstrap';
-import monsters from '../data/monsters.json';
-
-const initialState = {
-    types: [],
-    sizes: [],
-    alignments: []
-};
 
 class Filters extends Component {
     constructor(props) {
         super(props);
 
-        const uniques = {};
-
-        for (let i = 0; i < monsters.length; i++) {
-            const monster = monsters[i];
-
-            if (!(monster.type in uniques)) {
-                uniques[monster.type] = 1;
-                initialState['types'].push(monster.type);
-            }
-
-            if (!(monster.size in uniques)) {
-                uniques[monster.size] = 1;
-                initialState['sizes'].push(monster.size);
-            }
-
-            if (!(monster.alignment in uniques)) {
-                uniques[monster.alignment] = 1;
-                initialState['alignments'].push(monster.alignment);
-            }
-        }
-
-        this.state = initialState;
+        this.state = {
+            types: this.props.data.types,
+            sizes: this.props.data.sizes,
+            alignments: this.props.data.alignments
+        };
     }
 
     handleChange = (type, e) => {
@@ -57,8 +33,6 @@ class Filters extends Component {
                                 </Checkbox>
                             );
                         }, this)}
-                    </FormGroup>
-                    <FormGroup>
                         <ControlLabel>Size</ControlLabel>
                         {this.state.sizes.map(function(size, index) {
                             return (
@@ -71,8 +45,6 @@ class Filters extends Component {
                                 </Checkbox>
                             );
                         }, this)}
-                    </FormGroup>
-                    <FormGroup>
                         <ControlLabel>Alignment</ControlLabel>
                         {this.state.alignments.map(function(alignment, index) {
                             return (

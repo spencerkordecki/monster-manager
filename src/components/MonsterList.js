@@ -1,17 +1,20 @@
 import React, { Component } from 'react';
 import { Panel, Col, Row } from 'react-bootstrap';
 import MonsterTile from '../components/MonsterTile';
-import monsters from '../data/monsters.json';
-
-const initialState = {
-    monsters: [...monsters]
-};
 
 class MonsterList extends Component {
     constructor(props) {
         super(props);
 
-        this.state = initialState;
+        this.state = {
+            monsters: props.data
+        };
+    }
+
+    componentWillReceiveProps(nextProps) {
+        this.setState({
+            monsters: nextProps.data
+        });
     }
 
     render() {
