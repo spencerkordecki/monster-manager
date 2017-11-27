@@ -62,13 +62,21 @@ class App extends Component {
 
         let filtered = [];
 
-        for (const key in this.state.selectedFilters) {
-            filtered = filtered.concat(
-                monsters.filter(monster =>
-                    this.state.selectedFilters[key].includes(monster[key])
-                )
-            );
-        }
+        filtered = filtered.concat(
+            monsters.filter(monster => {
+                let included = true;
+
+                for (const key in this.state.selectedFilters) {
+                    if (
+                        this.state.selectedFilters[key].length &&
+                        !this.state.selectedFilters[key].includes(monster[key])
+                    ) {
+                        included = false;
+                    }
+                }
+                return included;
+            })
+        );
 
         this.setState({ monsters: filtered });
     };

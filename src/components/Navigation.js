@@ -3,7 +3,7 @@ import { Nav, Navbar, NavItem } from 'react-bootstrap';
 
 class Navigation extends Component {
     render() {
-        return(
+        return (
             <Navbar>
                 <Navbar.Header>
                     <Navbar.Brand>
@@ -12,11 +12,10 @@ class Navigation extends Component {
                 </Navbar.Header>
                 <Nav>
                     <NavItem>Monster List</NavItem>
-                    <NavItem>View Encounter</NavItem>
                 </Nav>
             </Navbar>
         );
     }
-};
+}
 
 export default Navigation;

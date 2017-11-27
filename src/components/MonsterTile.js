@@ -1,14 +1,8 @@
 import React from 'react';
 import { Panel, Col } from 'react-bootstrap';
 
-const MonsterTile = ({
-    name,
-    type,
-    armorClass,
-    hitPoints,
-    languages
-}) => {
-    return(
+const MonsterTile = ({ name, type, armorClass, hitPoints, languages }) => {
+    return (
         <Col md={4}>
             <Panel header={name}>
                 <ul>
