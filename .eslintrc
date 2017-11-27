@@ -4,12 +4,9 @@
         "browser": true,
         "node": true
     },
-    "plugins": [
-        "babel",
-        "react"
-    ],
+    "plugins": ["babel", "react", "jsx-a11y"],
     "rules": {
-        "quotes": [1, "single", {"allowTemplateLiterals": true}],
+        "quotes": [1, "single", { "allowTemplateLiterals": true }],
         "curly": [1, "multi-line", "consistent"],
         "strict": [1, "never"],
         "semi": [1, "always"],

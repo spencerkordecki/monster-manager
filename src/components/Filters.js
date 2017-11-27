@@ -1,33 +1,69 @@
-import React from 'react';
-import { Link } from 'react-router';
-import Filter from './Filter';
-import Helmet from 'react-helmet';
+import React, { Component } from 'react';
+import { Well, FormGroup, ControlLabel, Checkbox, Col } from 'react-bootstrap';
 
-const Filters = React.createClass({
+class Filters extends Component {
+    constructor(props) {
+        super(props);
 
-	render() {
+        this.state = {
+            types: this.props.data.types,
+            sizes: this.props.data.sizes,
+            alignments: this.props.data.alignments
+        };
+    }
 
-		return (
+    handleChange = (type, e) => {
+        this.props.filter(type, e);
+    };
 
-			<div className="monster-filters row col-sm-12">
-
-			<Helmet
-				title={ 'Monster Manager: Encounter Management Tools for GMs' }
-				meta={[
-					{name: "description", content: 'An interactive Dungeons and Dragons 5e Monster Manual featuring over 300 monsters from the D&D System Resource Documents (SRD).' },
-					{property: 'og:title', content: 'Monster Manager: Encounter Management Tools for GMs'},
-				]} />
-
-				<Filter {...this.props} value={this.props.filters.challenge_rating_min} key="challenge_rating_min" id="challenge_rating_min" filter="challenge_rating" label="Challenge Rating - Min"/>
-				<Filter {...this.props} value={this.props.filters.challenge_rating_max} key="challenge_rating_max" id="challenge_rating_max" filter="challenge_rating" label="Challenge Rating - Max"/>
-				<Filter {...this.props} value={this.props.filters.type} key="type" id="type" filter="type" label="Type"/>
-				<Filter {...this.props} value={this.props.filters.size} key="size" id="size" filter="size" label="Size"/>
-				<Filter {...this.props} value={this.props.filters.alignment} key="alignment" id="alignment" filter="alignment" label="Alignment"/>
-				<Filter {...this.props} value={this.props.filters.search} key="search" id="search" filter="search" label="Search"/>
-
-			</div>
-		)
-	}
-});
+    render() {
+        return (
+            <Col md={3}>
+                <Well>
+                    <FormGroup>
+                        <ControlLabel>Type</ControlLabel>
+                        {this.state.types.map(function(type, index) {
+                            return (
+                                <Checkbox
+                                    onChange={e => this.handleChange('type', e)}
+                                    key={index}
+                                    value={type}
+                                >
+                                    {type}
+                                </Checkbox>
+                            );
+                        }, this)}
+                        <ControlLabel>Size</ControlLabel>
+                        {this.state.sizes.map(function(size, index) {
+                            return (
+                                <Checkbox
+                                    onChange={e => this.handleChange('size', e)}
+                                    key={index}
+                                    value={size}
+                                >
+                                    {size}
+                                </Checkbox>
+                            );
+                        }, this)}
+                        <ControlLabel>Alignment</ControlLabel>
+                        {this.state.alignments.map(function(alignment, index) {
+                            return (
+                                <Checkbox
+                                    onChange={e =>
+                                        this.handleChange('alignment', e)
+                                    }
+                                    key={index}
+                                    value={alignment}
+                                >
+                                    {alignment}
+                                </Checkbox>
+                            );
+                        }, this)}
+                    </FormGroup>
+                </Well>
+            </Col>
+        );
+    }
+}
 
 export default Filters;
