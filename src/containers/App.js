@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Navigation from '../components/Navigation';
-import Filters from '../components/Filters';
+import FilterList from '../components/FilterList';
 import MonsterList from '../components/MonsterList';
 import monsters from '../data/monsters.json';
 import { Row, Panel } from 'react-bootstrap';
@@ -8,9 +8,9 @@ import { Row, Panel } from 'react-bootstrap';
 const initialState = {
     monsters: [...monsters],
     filters: {
-        types: [],
-        sizes: [],
-        alignments: []
+        type: [],
+        size: [],
+        alignment: []
     },
     selectedFilters: {
         type: [],
@@ -30,17 +30,17 @@ class App extends Component {
 
             if (!(monster.type in uniques)) {
                 uniques[monster.type] = 1;
-                initialState.filters['types'].push(monster.type);
+                initialState.filters['type'].push(monster.type);
             }
 
             if (!(monster.size in uniques)) {
                 uniques[monster.size] = 1;
-                initialState.filters['sizes'].push(monster.size);
+                initialState.filters['size'].push(monster.size);
             }
 
             if (!(monster.alignment in uniques)) {
                 uniques[monster.alignment] = 1;
-                initialState.filters['alignments'].push(monster.alignment);
+                initialState.filters['alignment'].push(monster.alignment);
             }
         }
 
@@ -88,7 +88,10 @@ class App extends Component {
                     <Navigation />
                 </Row>
                 <Row>
-                    <Filters data={this.state.filters} filter={this.filter} />
+                    <FilterList
+                        data={this.state.filters}
+                        filter={this.filter}
+                    />
                     <MonsterList data={this.state.monsters} />
                 </Row>
             </Panel>
