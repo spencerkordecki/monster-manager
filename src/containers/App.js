@@ -3,7 +3,7 @@ import Navigation from '../components/Navigation';
 import Filters from '../components/Filters';
 import MonsterList from '../components/MonsterList';
 import monsters from '../data/monsters.json';
-import { Grid, Row } from 'react-bootstrap';
+import { Row, Panel } from 'react-bootstrap';
 
 const initialState = {
     monsters: [...monsters],
@@ -83,22 +83,15 @@ class App extends Component {
 
     render() {
         return (
-            <div id="app" className="container">
+            <Panel id="app" className="container">
                 <Row>
                     <Navigation />
                 </Row>
                 <Row>
-                    <Grid>
-                        <Row>
-                            <Filters
-                                data={this.state.filters}
-                                filter={this.filter}
-                            />
-                            <MonsterList data={this.state.monsters} />
-                        </Row>
-                    </Grid>
+                    <Filters data={this.state.filters} filter={this.filter} />
+                    <MonsterList data={this.state.monsters} />
                 </Row>
-            </div>
+            </Panel>
         );
     }
 }
