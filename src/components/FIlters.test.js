@@ -2,12 +2,20 @@ import React from 'react';
 import Filters from './Filters';
 import { shallow } from 'enzyme';
 
-const emptyState = {
-    types: [],
-    sizes: [],
-    alignments: []
-};
+describe('Filters', () => {
+    const emptyState = {
+        types: [],
+        sizes: [],
+        alignments: []
+    };
 
-it('renders without crashing', () => {
-    shallow(<Filters data={emptyState} />);
+    const mockState = {
+        types: ['aberration', 'humanoid', 'dragon'],
+        sizes: ['Large', 'Medium', 'Small'],
+        alignments: ['lawful evil', 'chaotic evil', 'neutral']
+    };
+
+    it('renders without crashing', () => {
+        shallow(<Filters data={emptyState} />);
+    });
 });
