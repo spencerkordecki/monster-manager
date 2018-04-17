@@ -48,37 +48,50 @@ class Manager extends Component {
   }
 
   filter = (category, event) => {
-    const updates = this.state.selectedFilters[category];
-
-    updates.includes(event.target.value)
-      ? updates.splice(updates.indexOf(event.target.value), 1)
-      : updates.push(event.target.value);
-
-    this.setState({
-      selectedFilters: Object.assign(this.state.selectedFilters, {
-        [category]: updates
-      })
-    });
-
+    let filters = this.state.selectedFilters[category];
     let filtered = [];
 
-    filtered = filtered.concat(
-      monsters.filter(monster => {
-        let included = true;
+    // TODO: Work on handling different types of filters
 
-        for (const key in this.state.selectedFilters) {
-          if (
-            this.state.selectedFilters[key].length &&
-            !this.state.selectedFilters[key].includes(monster[key])
-          ) {
-            included = false;
+    if (filters.includes(event.target.value)) {
+      filters.splice(filters.indexOf(event.target.value), 1);
+    } else {
+      filters.push(event.target.value);
+    }
+
+    if (event.target.checked) {
+      filtered = monsters.filter(monster => {
+        return monster[category] == event.target.value;
+      });
+
+      if (this.state.monsters.length === initialState.monsters.length) {
+        this.setState({
+          monsters: filtered,
+          filters: {
+            [category]: filters
           }
-        }
-        return included;
-      })
-    );
+        });
+      } else {
+        filtered = filtered.concat(this.state.monsters);
+        this.setState({
+          monsters: filtered,
+          filters: {
+            [category]: filters
+          }
+        });
+      }
+    } else {
+      filtered = this.state.monsters.filter(monster => {
+        return monster[category] != event.target.value;
+      });
 
-    this.setState({ monsters: filtered });
+      this.setState({
+        monsters: filtered,
+        filters: {
+          [category]: filters
+        }
+      });
+    }
   };
 
   render() {
