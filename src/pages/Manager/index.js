@@ -25,6 +25,8 @@ class Manager extends Component {
 
     const uniques = {};
 
+    // TODO: Filter monster data in state to only that used on the page to increase performance
+
     for (let i = 0; i < monsters.length; i++) {
       const monster = monsters[i];
 
@@ -48,10 +50,9 @@ class Manager extends Component {
   }
 
   filter = (category, event) => {
+    //let newFilters = {};
     let filters = this.state.selectedFilters[category];
     let filtered = [];
-
-    // TODO: Work on handling different types of filters
 
     if (filters.includes(event.target.value)) {
       filters.splice(filters.indexOf(event.target.value), 1);
@@ -59,39 +60,51 @@ class Manager extends Component {
       filters.push(event.target.value);
     }
 
-    if (event.target.checked) {
-      filtered = monsters.filter(monster => {
-        return monster[category] == event.target.value;
-      });
+    /* newFilters = {
+      ...this.state.selectedFilters,
+      [category]: filters
+    };
 
+    filtered = monsters.filter(monster => {
+      // TODO: Handle a user unchecking all checkboxes
+      // TODO: Change filters from different categories to be AND instead of OR
+    }) */
+
+    if (event.target.checked) {
+      // Handle the first filter click
       if (this.state.monsters.length === initialState.monsters.length) {
-        this.setState({
-          monsters: filtered,
-          filters: {
-            [category]: filters
-          }
+        filtered = monsters.filter(monster => {
+          return monster[category] == event.target.value;
         });
       } else {
-        filtered = filtered.concat(this.state.monsters);
-        this.setState({
-          monsters: filtered,
-          filters: {
-            [category]: filters
-          }
-        });
+        filtered = monsters
+          .filter(monster => {
+            return monster[category] == event.target.value;
+          })
+          .concat(this.state.monsters)
+          .sort(function(a, b) {
+            if (a.name.toLowerCase() < b.name.toLowerCase()) {
+              return -1;
+            }
+            if (a.name.toLowerCase() > b.name.toLowerCase()) {
+              return 1;
+            }
+            return 0;
+          });
       }
     } else {
       filtered = this.state.monsters.filter(monster => {
         return monster[category] != event.target.value;
       });
-
-      this.setState({
-        monsters: filtered,
-        filters: {
-          [category]: filters
-        }
-      });
     }
+
+    this.setState({
+      monsters: filtered,
+      selectedFilters: {
+        ...this.state.selectedFilters,
+        [category]: filters
+      }
+    });
   };
 
   render() {
