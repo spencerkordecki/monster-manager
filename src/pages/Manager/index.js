@@ -50,60 +50,35 @@ class Manager extends Component {
   }
 
   filter = (category, event) => {
-    //let newFilters = {};
-    let filters = this.state.selectedFilters[category];
+    let updatedFilters = {};
+    let categoryFilters = this.state.selectedFilters[category];
     let filtered = [];
 
-    if (filters.includes(event.target.value)) {
-      filters.splice(filters.indexOf(event.target.value), 1);
+    if (categoryFilters.includes(event.target.value)) {
+      categoryFilters.splice(categoryFilters.indexOf(event.target.value), 1);
     } else {
-      filters.push(event.target.value);
+      categoryFilters.push(event.target.value);
     }
 
-    /* newFilters = {
+    updatedFilters = {
       ...this.state.selectedFilters,
-      [category]: filters
+      [category]: categoryFilters
     };
 
     filtered = monsters.filter(monster => {
-      // TODO: Handle a user unchecking all checkboxes
-      // TODO: Change filters from different categories to be AND instead of OR
-    }) */
-
-    if (event.target.checked) {
-      // Handle the first filter click
-      if (this.state.monsters.length === initialState.monsters.length) {
-        filtered = monsters.filter(monster => {
-          return monster[category] == event.target.value;
-        });
-      } else {
-        filtered = monsters
-          .filter(monster => {
-            return monster[category] == event.target.value;
-          })
-          .concat(this.state.monsters)
-          .sort(function(a, b) {
-            if (a.name.toLowerCase() < b.name.toLowerCase()) {
-              return -1;
-            }
-            if (a.name.toLowerCase() > b.name.toLowerCase()) {
-              return 1;
-            }
-            return 0;
-          });
+      for (let key in updatedFilters) {
+        if (updatedFilters[key].length) {
+          if (!updatedFilters[key].includes(monster[key])) {
+            return false;
+          }
+        }
       }
-    } else {
-      filtered = this.state.monsters.filter(monster => {
-        return monster[category] != event.target.value;
-      });
-    }
+      return true;
+    });
 
     this.setState({
       monsters: filtered,
-      selectedFilters: {
-        ...this.state.selectedFilters,
-        [category]: filters
-      }
+      selectedFilters: updatedFilters
     });
   };
 
