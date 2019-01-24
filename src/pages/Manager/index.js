@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
+import { Row, Panel } from 'react-bootstrap';
 import Navigation from '../../components/Navigation';
 import FilterList from '../../components/FilterList';
 import MonsterList from '../../components/MonsterList';
 import monsters from '../../data/monsters.json';
-import { Row, Panel } from 'react-bootstrap';
 
 const initialState = {
   monsters: [...monsters],
@@ -25,24 +25,22 @@ class Manager extends Component {
 
     const uniques = {};
 
-    // TODO: Filter monster data in state to only that used on the page to increase performance
-
-    for (let i = 0; i < monsters.length; i++) {
+    for (let i = 0; i < monsters.length; i += 1) {
       const monster = monsters[i];
 
       if (!(monster.type in uniques)) {
         uniques[monster.type] = 1;
-        initialState.filters['type'].push(monster.type);
+        initialState.filters.type.push(monster.type);
       }
 
       if (!(monster.size in uniques)) {
         uniques[monster.size] = 1;
-        initialState.filters['size'].push(monster.size);
+        initialState.filters.size.push(monster.size);
       }
 
       if (!(monster.alignment in uniques)) {
         uniques[monster.alignment] = 1;
-        initialState.filters['alignment'].push(monster.alignment);
+        initialState.filters.alignment.push(monster.alignment);
       }
     }
 
@@ -51,7 +49,7 @@ class Manager extends Component {
 
   filter = (category, event) => {
     let updatedFilters = {};
-    let categoryFilters = this.state.selectedFilters[category];
+    const categoryFilters = this.state.selectedFilters[category];
     let filtered = [];
 
     if (categoryFilters.includes(event.target.value)) {
@@ -65,15 +63,18 @@ class Manager extends Component {
       [category]: categoryFilters
     };
 
-    filtered = monsters.filter(monster => {
-      for (let key in updatedFilters) {
+    filtered = monsters.filter((monster) => {
+      let isFilteredMonster = true;
+
+      Object.keys(updatedFilters).forEach((key) => {
         if (updatedFilters[key].length) {
           if (!updatedFilters[key].includes(monster[key])) {
-            return false;
+            isFilteredMonster = false;
           }
         }
-      }
-      return true;
+      });
+
+      return isFilteredMonster;
     });
 
     this.setState({

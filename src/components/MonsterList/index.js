@@ -20,19 +20,20 @@ class MonsterList extends Component {
   render() {
     return (
       <Col md={9}>
-        <Row className={'equal'}>
-          {this.state.monsters.map(function(monster, index) {
-            return (
+        <Row className="equal">
+          {this.state.monsters.map(
+            monster => (
               <MonsterTile
-                key={index}
+                key={monster.name}
                 name={monster.name}
                 type={monster.type}
                 armorClass={monster.armor_class}
                 hitPoints={monster.hit_points}
                 languages={monster.languages}
               />
-            );
-          }, this)}
+            ),
+            this
+          )}
         </Row>
       </Col>
     );

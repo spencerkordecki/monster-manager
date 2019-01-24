@@ -19,3 +19,12 @@ body {
   padding: 10px;
   font-family: sans-serif;
 }
+
+.filter-label,
+.monster-tile__info {
+  text-transform: capitalize;
+}
+
+.monster-tile__category {
+  font-weight: bold;
+}

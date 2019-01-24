@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
+import {
+  Well, FormGroup, ControlLabel, Col
+} from 'react-bootstrap';
 import Filter from './Filter';
-import { Well, FormGroup, ControlLabel, Col } from 'react-bootstrap';
 
 class FilterList extends Component {
   constructor(props) {
@@ -19,20 +21,18 @@ class FilterList extends Component {
     return (
       <Col md={3}>
         <Well>
-          {Object.keys(this.state.filters).map(key => {
+          {Object.keys(this.state.filters).map((key) => {
             const category = key;
             return (
               <FormGroup key={key}>
                 <ControlLabel key={key}>{key}</ControlLabel>
-                {this.state.filters[key].map(filter => {
-                  return (
-                    <Filter
-                      key={filter}
-                      content={filter}
-                      onChange={e => this.handleChange(category, e)}
-                    />
-                  );
-                })}
+                {this.state.filters[key].map(filter => (
+                  <Filter
+                    key={filter}
+                    content={filter}
+                    onChange={e => this.handleChange(category, e)}
+                  />
+                ))}
               </FormGroup>
             );
           })}
